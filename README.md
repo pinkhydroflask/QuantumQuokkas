@@ -1,88 +1,59 @@
-# Personal AI Privacy Capsule (PAC)
+# Personal AI-Privacy Capsule (PAC)
 
-A user-owned privacy layer that preprocesses text/images/location on-device, sends only sanitized data to cloud AI, and post-processes AI responses locally. Includes audit logging, CSV export, and optional Proof-of-Deletion receipts backed by a TTL vault.
+## Project Summary
 
-## Quickstart
+Personal AI-Privacy Capsule (PAC) is a comprehensive privacy-focused application designed to address the growing risks of data exposure in AI interactions. By detecting, sanitizing, and reinserting Personally Identifiable Information (PII) entirely on-device, PAC ensures that sensitive information never leaves the user’s control. This solution empowers individuals and organizations to harness the power of AI while remaining compliant with privacy regulations such as GDPR and CCPA.
 
-### Prerequisites
-- Python 3.11+
-- Node.js 18+ and Expo CLI (for RN fallback UI)
-- Docker (optional) for Redis via docker-compose
+## Core Features & Functionality
 
-### Backend (FastAPI)
+- Text Privacy Protection: Regex PII detection, sanitization, AI proxy, reinsertion.
+- Image Privacy Protection: Face detection, blurring, pixelation, optional AI vision.
+- Audit & Compliance: Logging, CSV export, signed receipts, TTL vault.
+- Security Features: HMAC authentication, key versioning, rate limiting, CORS.
+- User Interface: React Native app, dark theme, configurable settings, real-time feedback.
 
-```bash
-cd api
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
 
-Environment variables (via `.env` or environment):
-- AI_API_KEY: Optional; if set, used for real LLM provider. Otherwise dummy completions are returned.
-- PODR_SECRET: HMAC secret for receipts; default generated if missing (dev only).
-- RECEIPT_TTL_SECONDS: TTL for vault keys; default 10.
-- ALLOWED_ORIGINS: Comma-separated origins for CORS.
-- REDIS_URL: Redis connection string; e.g. redis://localhost:6379/0
-- DATABASE_URL: SQLite path; default `sqlite:///./pac.db`.
+## Key Benefits
 
-Run tests:
-```bash
-cd api
-pytest -q
-```
+- Zero Trust Architecture: No external service sees raw PII.
+- User Control: Full ownership of privacy decisions.
+- Deterministic Processing: Predictable privacy enforcement.
+- Compliance Ready: Built-in audit trails and deletion verification.
+- Cross-Platform: Works on iOS and Android.
+- Extensible: Modular design supports future PII types.
 
-### UI (React Native / Expo fallback)
 
-```bash
-cd app/rn
-npm i
-npm run start
-```
+## Technology 
 
-The UI expects the API at `http://localhost:8000` (configurable in `app/rn/lib/config.ts`).
+### Development Tools
 
-### Docker Compose (Redis)
+- Backend: Python 3.11+, FastAPI, Uvicorn, pytest, Docker, Docker Compose.
+- Frontend: React Native, Expo, TypeScript, Babel, Metro Bundler.
+- Environment: VS Code, Git, CLI.
 
-```bash
-docker compose up -d
-```
 
-## Repository Structure
+### APIs
 
-```
-.
-├─ app/
-│  ├─ lynx/            # Placeholder for Lynx; RN fallback below
-│  └─ rn/              # Expo app with required screens and libs
-├─ api/
-│  ├─ main.py          # FastAPI app + CORS
-│  ├─ ai_proxy.py      # LLM proxy + basic rate limit & idempotency
-│  ├─ receipts.py      # HMAC-signed receipts + vault
-│  ├─ audit.py         # Audit storage + CSV export
-│  ├─ security.py      # sha256, HMAC sign/verify, key versions
-│  ├─ redis_client.py  # Optional Redis vault helper
-│  ├─ settings.py      # Env settings and defaults
-│  ├─ placeholders.py  # Deterministic placeholders and reinsertion
-│  ├─ requirements.txt
-│  └─ tests/
-│     ├─ test_placeholders.py
-│     ├─ test_receipts.py
-│     ├─ test_ai_proxy.py
-│     └─ test_audit.py
-├─ scripts/
-│  ├─ verify_receipt.py
-│  └─ seed_demo_data.py
-├─ data/
-├─ docker-compose.yml
-├─ LICENSE
-└─ README.md
-```
+- Internal REST APIs: /ai/complete, /ai/vision, /receipts/process, /receipts/verify, /audit/export, /image/blur.
+- External Services: OpenAI API, Vision AI APIs, Redis.
+- Mobile APIs: Expo Image Picker, Expo Manipulator, Expo Sharing, Expo File System.
 
-## Notes
-- Privacy by design: raw PII never leaves device; only sanitized prompts are sent.
-- Receipts use HMAC-SHA256 signatures and an optional Redis TTL vault.
-- CSV export contains only anonymized metadata.
 
-## License
-This project is licensed under the MIT License. See `LICENSE` for details.
+### Assets
+
+- Data Assets: Regex patterns, Haar cascades, test data, audit logs.
+- UI Assets: Dark theme, icon system, reusable components.
+- Config Assets: Environment variables, SQLite schema, Docker configs.
+
+
+### Libraries
+
+- Python: fastapi, uvicorn, pydantic, redis, pandas, pytest, opencv, Pillow, numpy.
+- React Native: react, react-navigation, zustand, expo modules.
+
+
+## Relevant Problem Statement
+
+Theme: (7) Privacy Meets AI: Building a Safer Digital Future
+
+In today's AI-driven world, users face significant privacy risks when interacting with cloud-based AI services. Sensitive personal data, including emails, phone numbers, and images, are often transmitted to third-party servers without sufficient safeguards, exposing users to identity theft, data leakage, and regulatory non-compliance. 
