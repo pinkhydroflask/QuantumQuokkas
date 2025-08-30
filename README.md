@@ -79,26 +79,6 @@ docker compose up -d
 └─ README.md
 ```
 
-## 3-minute Demo Script
-
-1) Open Text Capsule.
-- Paste:
-```
-Email john.tan@company.com, phone 9123-4567, ship to 123 Tampines St 45.
-```
-- Tap Sanitize → shows Before/After with placeholders: `[EMAIL_1]`, `[PHONE_1]`, `[ADDRESS_1]`.
-- Tap Ask AI → sends sanitized prompt to `/ai/complete`.
-- Tap Reinsert locally → final output displays with original values restored.
-- Check Audit → see entry noting EMAIL, PHONE, ADDRESS redactions. Tap Export CSV.
-
-2) Open Image Capsule.
-- Pick demo image from `data/` → preview Before/After with blurred faces/plates.
-- Tap Analyze with AI (optional) → calls `/ai/vision` with blurred image.
-
-3) Receipts (optional).
-- Enable receipts in Settings. Submit a text. A deletion receipt appears.
-- Tap Verify → `/receipts/verify` shows ✅ after TTL expiry.
-
 ## Notes
 - Privacy by design: raw PII never leaves device; only sanitized prompts are sent.
 - Receipts use HMAC-SHA256 signatures and an optional Redis TTL vault.
