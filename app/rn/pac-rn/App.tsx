@@ -10,6 +10,20 @@ import ImageCapsule from './src/screens/ImageCapsule';
 import Audit from './src/screens/Audit';
 import Settings from './src/screens/Settings';
 
+// DEBUG: log every fetch URL + method (remove later)
+if (typeof global.fetch === "function" && !(global as any).__FETCH_LOGGED__) {
+  const _fetch = global.fetch;
+  (global as any).__FETCH_LOGGED__ = true;
+  global.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+    try {
+      const url = typeof input === "string" ? input : (input as URL).toString();
+      const method = init?.method || "GET";
+      console.log("[fetch]", method, url);
+    } catch {}
+    return _fetch(input as any, init as any);
+  };
+}
+
 export type RootStackParamList = {
   Home: undefined;
   TextCapsule: undefined;

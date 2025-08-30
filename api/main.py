@@ -8,6 +8,14 @@ from .vision import router as image_router
 
 app = FastAPI(title="PAC API", version="0.1.0")
 
+@app.middleware("http")
+async def log_requests(request, call_next):
+    print(">>", request.method, request.url.path)
+    resp = await call_next(request)
+    print("<<", resp.status_code, request.url.path)
+    return resp
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.allowed_origins,

@@ -1,12 +1,13 @@
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
-// Detect if running on device vs simulator/web
-const isDevice = Constants.appOwnership === 'standalone' || Constants.appOwnership === 'expo';
+// Read runtime config from app.json → expo.extra
+type Extra = { EXPO_PUBLIC_API_BASE?: string };
+const extra = (Constants.expoConfig?.extra || {}) as Extra;
 
-// For device: use LAN IP; for simulator/web: use localhost
-export const API_BASE_URL = isDevice 
-  ? 'http://192.168.1.100:8000'  // Update this to your Mac's LAN IP
-  : 'http://localhost:8000';
+// Base URL always comes from app.json (or fallback)
+export const API_BASE_URL =
+  extra.EXPO_PUBLIC_API_BASE ||
+  "http://localhost:8000"; // fallback for dev if extra not set
 
 export const API_ENDPOINTS = {
   aiComplete: `${API_BASE_URL}/ai/complete`,
@@ -16,3 +17,5 @@ export const API_ENDPOINTS = {
   auditExport: `${API_BASE_URL}/audit/export`,
   imageBlur: `${API_BASE_URL}/image/blur`,
 } as const;
+
+console.log(">>> API_BASE_URL:", API_BASE_URL);

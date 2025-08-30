@@ -1,27 +1,41 @@
 {
   "expo": {
-    "name": "pac-rn",
-    "slug": "pac-rn",
+    "name": "PAC",
+    "slug": "pac",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+
+    "extra": {
+      "EXPO_PUBLIC_API_BASE": "https://suite-saskatchewan-problems-timber.trycloudflare.com"
+    },
+
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false
+        }
+      }
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "usesCleartextTraffic": false
     },
+
     "web": {
       "favicon": "./assets/favicon.png"
     }
