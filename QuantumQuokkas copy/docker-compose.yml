@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - RECEIPT_TTL_SECONDS=10
+      - PODR_SECRET=devsecret
+      - ALLOWED_ORIGINS=http://localhost:19006,http://localhost:8081,http://localhost:5173
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
