@@ -108,11 +108,15 @@ export default function Settings() {
               CARD: 'Credit card numbers',
               GPS: 'GPS coordinates',
             };
-            return renderRuleToggle(
-              rule,
-              localTextRules.includes(rule),
-              () => handleTextRuleToggle(rule),
-              descriptions[rule as keyof typeof descriptions] || rule
+            return ( 
+              <View key={`text-${rule}`}>
+                {renderRuleToggle(
+                  rule,
+                  localTextRules.includes(rule),
+                  () => handleTextRuleToggle(rule),
+                  descriptions[rule as keyof typeof descriptions] || rule
+                )}
+              </View>
             );
           })}
         </Card>
@@ -130,11 +134,15 @@ export default function Settings() {
               SIGNATURE: 'Handwritten signatures',
               QR_CODE: 'QR codes and barcodes',
             };
-            return renderRuleToggle(
-              rule,
-              localImageRules.includes(rule),
-              () => handleImageRuleToggle(rule),
-              descriptions[rule as keyof typeof descriptions] || rule
+            return (
+              <View key={`image-${rule}`}>
+                {renderRuleToggle(
+                  rule,
+                  localImageRules.includes(rule),
+                  () => handleImageRuleToggle(rule),
+                  descriptions[rule as keyof typeof descriptions] || rule
+                )}
+              </View>
             );
           })}
         </Card>
